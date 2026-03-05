@@ -10,7 +10,7 @@ pipeline {
 
         stage('Clone Code') {
             steps {
-                git 'https://github.com/yourgithubusername/devops-cicd-project.git'
+                git 'https://github.com/ChetanMuli/devops-cicd-project.git'
             }
         }
 
@@ -24,8 +24,8 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(
                 credentialsId: 'dockerhub',
-                usernameVariable: 'USER',
-                passwordVariable: 'PASS'
+                usernameVariable: 'chetanmuli',
+                passwordVariable: 'Chetan@12'
                 )]) {
 
                 sh 'docker login -u $USER -p $PASS'
@@ -43,7 +43,7 @@ pipeline {
         stage('Deploy to EC2') {
             steps {
                 sh '''
-                ssh ubuntu@EC2_PUBLIC_IP << EOF
+                ssh ubuntu@16.170.108.127 << EOF
                 docker pull yourdockerhubusername/devops-cicd
                 docker stop devops-container || true
                 docker rm devops-container || true
