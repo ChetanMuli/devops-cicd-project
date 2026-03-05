@@ -41,16 +41,16 @@ pipeline {
             }
         }
 
-        stage('Deploy to EC2') {
+       stage('Deploy to EC2') {
     steps {
-        sh '''
-        ssh -o StrictHostKeyChecking=no ubuntu@16.170.108.127 << 'EOF'
+        sh """
+        ssh -o StrictHostKeyChecking=no ubuntu@16.170.108.127 '
         docker pull chetanmuli/devops-cicd
         docker stop devops-container || true
         docker rm devops-container || true
         docker run -d -p 80:3000 --name devops-container chetanmuli/devops-cicd
-        EOF
-        '''
+        '
+        """
     }
 }
 
