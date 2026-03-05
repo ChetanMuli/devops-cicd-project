@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "yourdockerhubusername/devops-cicd"
+        IMAGE_NAME = "chetanmuli/devops-cicd"
     }
 
     stages {
@@ -24,7 +24,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(
                 credentialsId: 'dockerhub',
-                usernameVariable: 'chetanmuli',
+                usernameVariable: 'chetanmuli13@gmail.com',
                 passwordVariable: 'Chetan@12'
                 )]) {
 
@@ -44,10 +44,10 @@ pipeline {
             steps {
                 sh '''
                 ssh ubuntu@16.170.108.127 << EOF
-                docker pull yourdockerhubusername/devops-cicd
+                docker pull chetanmuli/devops-cicd
                 docker stop devops-container || true
                 docker rm devops-container || true
-                docker run -d -p 80:3000 --name devops-container yourdockerhubusername/devops-cicd
+                docker run -d -p 80:3000 --name devops-container chetanmuli/devops-cicd
                 EOF
                 '''
             }
