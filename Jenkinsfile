@@ -41,16 +41,17 @@ pipeline {
         }
 
         stage('Deploy to EC2') {
-            steps {
-                sh '''
-                ssh ubuntu@16.16.200.91 << EOF
-                docker pull chetanmuli/devops-cicd
-                docker stop devops-container || true
-                docker rm devops-container || true
-                docker run -d -p 80:3000 --name devops-container chetanmuli/devops-cicd
-                EOF
-                '''
-            }
+ steps {
+  sh '''
+  ssh ubuntu@16.16.200.91 << 'EOF'
+  docker pull chetanmuli/devops-cicd
+  docker stop devops-container || true
+  docker rm devops-container || true
+  docker run -d -p 80:3000 --name devops-container chetanmuli/devops-cicd
+  EOF
+  '''
+ }
+}
         }
 
     }
