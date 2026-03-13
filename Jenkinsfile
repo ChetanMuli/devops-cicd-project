@@ -8,12 +8,6 @@ pipeline {
 
     stages {
 
-        stage('Clone Code') {
-            steps {
-                git 'https://github.com/ChetanMuli/devops-cicd-project.git'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t $IMAGE_NAME .'
@@ -23,12 +17,12 @@ pipeline {
         stage('Docker Login') {
             steps {
                 withCredentials([usernamePassword(
-                credentialsId: 'dockerhub',
-                usernameVariable: 'chetanmuli',
-                passwordVariable: 'Chetan@12'
+                    credentialsId: 'dockerhub',
+                    usernameVariable: 'USER',
+                    passwordVariable: 'PASS'
                 )]) {
 
-                sh 'docker login -u $USER -p $PASS'
+                    sh 'docker login -u $USER -p $PASS'
 
                 }
             }
@@ -37,6 +31,12 @@ pipeline {
         stage('Push Image') {
             steps {
                 sh 'docker push $IMAGE_NAME'
+            }
+        }
+
+        stage('Manual Approval') {
+            steps {
+                input "Deploy to EC2?"
             }
         }
 
